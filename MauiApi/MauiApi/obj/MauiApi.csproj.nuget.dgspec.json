@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Projekty\\MauiApp\\MauiApi\\MauiApi\\MauiApi.csproj": {}
+    "E:\\Projekty\\Maui-App\\MauiApi\\MauiApi\\MauiApi.csproj": {}
   },
   "projects": {
-    "E:\\Projekty\\MauiApp\\MauiApi\\MauiApi\\MauiApi.csproj": {
+    "E:\\Projekty\\Maui-App\\MauiApi\\MauiApi\\MauiApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projekty\\MauiApp\\MauiApi\\MauiApi\\MauiApi.csproj",
+        "projectUniqueName": "E:\\Projekty\\Maui-App\\MauiApi\\MauiApi\\MauiApi.csproj",
         "projectName": "MauiApi",
-        "projectPath": "E:\\Projekty\\MauiApp\\MauiApi\\MauiApi\\MauiApi.csproj",
+        "projectPath": "E:\\Projekty\\Maui-App\\MauiApi\\MauiApi\\MauiApi.csproj",
         "packagesPath": "C:\\Users\\Hasari\\.nuget\\packages\\",
-        "outputPath": "E:\\Projekty\\MauiApp\\MauiApi\\MauiApi\\obj\\",
+        "outputPath": "E:\\Projekty\\Maui-App\\MauiApi\\MauiApi\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
