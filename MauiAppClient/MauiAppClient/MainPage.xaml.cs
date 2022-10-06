@@ -1,24 +1,35 @@
-﻿namespace MauiAppClient;
+﻿using MauiAppClient.Services;
+using System.Diagnostics;
+using Debug = System.Diagnostics.Debug;
+
+namespace MauiAppClient;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+	private IRestDataService _dataService;
 
-	public MainPage()
+	public MainPage(IRestDataService dataService)
 	{
 		InitializeComponent();
+
+		_dataService = dataService;
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	protected async override void OnAppearing()
 	{
-		count++;
+		base.OnAppearing();
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+        collectionView.ItemsSource = await _dataService.GetAllUsersAsync();
 	}
+
+	async void OnAddUserClicked(object sender, EventArgs e)
+	{
+		Debug.WriteLine("");
+	}
+
+    async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        Debug.WriteLine("");
+    }
 }
 

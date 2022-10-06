@@ -1,11 +1,12 @@
-﻿using Android.OS;
-using MauiAppClient.Models;
+﻿using MauiAppClient.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using Debug = System.Diagnostics.Debug;
 
 namespace MauiAppClient.Services
 {
@@ -28,14 +29,65 @@ namespace MauiAppClient.Services
             };
         }
 
-        public Task AddUserAsync(User user)
+        public async Task AddUserAsync(User user)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access");
+                return;
+            }
+
+            try
+            {
+                string jsonUser = JsonSerializer.Serialize<User>(user, _jsonSerializer);
+                StringContent content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PostAsync($"{_url}/users", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("OK");
+                }
+                else
+                {
+                    Debug.WriteLine("Error - non http 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return;
         }
 
-        public Task DeleteUserAsync(int id)
+        public async Task DeleteUserAsync(int id)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access");
+                return;
+            }
+
+            try
+            {
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/users/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("OK");
+                }
+                else
+                {
+                    Debug.WriteLine("Error - non http 2xx");
+                }
+            }
+            catch(Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return;
         }
 
         public async Task<List<User>> GetAllUsersAsync()
@@ -44,7 +96,7 @@ namespace MauiAppClient.Services
 
             if(Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
-                //No internet access
+                Debug.WriteLine("No internet access"); 
                 return users;
             }
 
@@ -54,24 +106,55 @@ namespace MauiAppClient.Services
 
                 if(response.IsSuccessStatusCode)
                 {
+                    string content = await response.Content.ReadAsStringAsync();
 
+                    users = JsonSerializer.Deserialize<List<User>>(content, _jsonSerializer);
+
+                    Debug.WriteLine("OK");
                 }
                 else
                 {
-
+                    Debug.WriteLine("Error - non http 2xx");
                 }
             }
             catch(Exception ex)
             {
-                
+                Debug.WriteLine(ex.Message);
             }
 
             return users;
         }
 
-        public Task UpdateUserAsync(User user)
+        public async Task UpdateUserAsync(User user)
         {
-            throw new NotImplementedException();
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                Debug.WriteLine("No internet access");
+                return;
+            }
+
+            try
+            {
+                string jsonUser = JsonSerializer.Serialize<User>(user, _jsonSerializer);
+                StringContent content = new StringContent(jsonUser, Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = await _httpClient.PutAsync($"{_url}/users/{user.Id}", content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Debug.WriteLine("OK");
+                }
+                else
+                {
+                    Debug.WriteLine("Error - non http 2xx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message);
+            }
+
+            return;
         }
     }
 }
