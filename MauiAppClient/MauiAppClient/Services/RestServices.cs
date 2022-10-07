@@ -17,9 +17,11 @@ namespace MauiAppClient.Services
         private readonly string _url;
         private readonly JsonSerializerOptions _jsonSerializer;
 
-        public RestServices()
+        public RestServices(HttpClient httpClient)
         {
-            _httpClient = new HttpClient();
+            //_httpClient = new HttpClient();
+            _httpClient = httpClient;   
+
             _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://" : "https://localhost";
             _url = $"{_baseAddress}/api";
 

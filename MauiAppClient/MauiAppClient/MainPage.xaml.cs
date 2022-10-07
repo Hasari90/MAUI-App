@@ -1,4 +1,6 @@
-﻿using MauiAppClient.Services;
+﻿using MauiAppClient.Models;
+using MauiAppClient.Services;
+using MauiAppClient.Views;
 using System.Diagnostics;
 using Debug = System.Diagnostics.Debug;
 
@@ -25,11 +27,25 @@ public partial class MainPage : ContentPage
 	async void OnAddUserClicked(object sender, EventArgs e)
 	{
 		Debug.WriteLine("");
+
+		var navigationParametr = new Dictionary<string, object>
+		{
+			{nameof(User), new User()}
+		};
+
+		await Shell.Current.GoToAsync(nameof(ManageUsersPage), navigationParametr);
 	}
 
     async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         Debug.WriteLine("");
+
+        var navigationParametr = new Dictionary<string, object>
+        {
+            {nameof(User), e.CurrentSelection.FirstOrDefault() as User}
+        };
+
+        await Shell.Current.GoToAsync(nameof(ManageUsersPage), navigationParametr);
     }
 }
 
